@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CASHMAN CASINO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(45deg, #0f0f0f, #1a0033, #0f0f0f);
+      background-size: 400% 400%;
+      animation: gradient 8s ease infinite;
+      color: gold;
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    @keyframes gradient { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+
+    .header {
+      padding: 20px;
+      background: rgba(0,0,0,0.7);
+      border-bottom: 3px solid gold;
+      box-shadow: 0 0 30px gold;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{box-shadow:0 0 30px gold} 50%{box-shadow:0 0 50px #FFD700} }
+
+    h1 {
+      font-size: 3.5em;
+      text-shadow: 0 0 20px #FFD700, 0 0 40px #FFAA00;
+      letter-spacing: 5px;
+      animation: neon 1.5s ease-in-out infinite alternate;
+    }
+    @keyframes neon { from { text-shadow: 0 0 10px #FFD700; } to { text-shadow: 0 0 30px #FFD700, 0 0 60px #FFAA00; } }
+
+    .vip { font-size: 1.2em; color: #00FFFF; text-shadow: 0 0 15px cyan; }
+
+    .balance {
+      margin: 20px auto;
+      padding: 15px 30px;
+      background: linear-gradient(135deg, #1a1a1a, #333);
+      border: 2px solid gold;
+      border-radius: 20px;
+      display: inline-block;
+      font-size: 1.4em;
+      box-shadow: 0 0 20px rgba(255,215,0,0.6);
+      animation: glow 2s infinite;
+    }
+    @keyframes glow { 0%,100%{box-shadow:0 0 20px gold} 50%{box-shadow:0 0 40px #FFD700} }
+
+    .buy-btn, .cashout-btn {
+      padding: 15px 30px;
+      margin: 10px;
+      border: none;
+      border-radius: 15px;
+      font-weight: bold;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-shadow: 0 0 10px black;
+    }
+    .buy-btn {
+      background: linear-gradient(45deg, #00FF00, #00CC00);
+      color: black;
+      box-shadow: 0 0 20px lime;
+    }
+    .buy-btn:hover { transform: scale(1.1); box-shadow: 0 0 30px lime; }
+
+    .cashout-btn {
+      background: linear-gradient(45deg, #FF4500, #FF1493);
+      color: white;
+      box-shadow: 0 0 20px #FF4500;
+    }
+    .cashout-btn:hover { transform: scale(1.1); box-shadow: 0 0 30px #FF1493; }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      perspective: 1000px;
+    }
+    .game {
+      background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+      border: 3px solid gold;
+      border-radius: 20px;
+      padding: 15px;
+      transform-style: preserve-3d;
+      transition: all 0.5s;
+      box-shadow: 0 0 20px rgba(255,215,0,0.5);
+    }
+    .game:hover {
+      transform: translateY(-10px) rotateX(10deg);
+      box-shadow: 0 0 40px gold, 0 0 60px #FFD700;
+    }
+
+    .slot-container {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin: 10px 0;
+    }
+    .slot {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #333, #111);
+      border: 3px solid gold;
+      border-radius: 12px;
+      font-size: 32px;
+      line-height: 60px;
+      box-shadow: inset 0 0 15px rgba(255,215,0,0.6), 0 0 15px gold;
+      animation: slotGlow 2s infinite;
+    }
+    @keyframes slotGlow { 0%,100%{box-shadow:inset 0 0 15px gold, 0 0 15px gold} 50%{box-shadow:inset 0 0 30px #FFD700, 0 0 30px #FFD700} }
+
+    .spin-btn {
+      background: linear-gradient(45deg, #FFD700, #FFA500);
+      color: black;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 20px gold;
+      transition: all 0.3s;
+    }
+    .spin-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 40px #FFD700;
+    }
+
+    .win-effect {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    .coin {
+      position: absolute;
+      width: 30px; height: 30px;
+      background: gold;
+      border-radius: 50%;
+      box-shadow: 0 0 20px #FFD700;
+      animation: fall 1.5s linear forwards;
+    }
+    @keyframes fall {
+      to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>CASHMAN CASINO</h1>
+    <p class="vip">Powered by <strong>$ThepeoplesCasino</strong></p>
+  </div>
+
+  <div class="balance">
+    Coins: <span id="coins">100</span> | 
+    Sweeps: <span id="sweeps">0</span>
+  </div>
+
+  <button class="buy-btn" onclick="buy(10)">$10 → 1,000 Coins</button>
+  <button class="buy-btn" onclick="buy(25)">$25 → 3,000 Coins</button>
+  <button class="cashout-btn" onclick="redeem()">CASH OUT</button>
+
+  <div class="game-grid" id="games"></div>
+
+  <div class="win-effect" id="winEffect"></div>
+
+  <script>
+    let coins = 100, sweeps = 0;
+    const games = [
+      "Gold Rush", "Diamond Vault", "777 Gold", "Mega Gold", "Fortune Gold",
+      "Jackpot Gold", "Spin Gold", "Lucky Gold", "Gold Mine", "Cash Gold",
+      "Gold Storm", "Gold Rain", "Fever Gold", "Big Gold", "Master Gold",
+      "Blitz Gold", "Hunt Gold", "Rain Gold", "Spin Gold", "Fever Gold",
+      "Party Gold", "City Gold", "Craze Gold", "Zone Gold", "Mania Gold",
+      "Break Gold", "Rush X Gold", "Win Gold", "King Gold", "Mega Gold"
+    ];
+    const symbols = ['Cherry', 'Gold Bar', 'Diamond', 'Seven', 'Bell', 'Star', 'Crown'];
+
+    games.forEach((name, i) => {
+      const div = document.createElement('div');
+      div.className = 'game';
+      div.innerHTML = `
+        <h3 style="color:gold; text-shadow:0 0 10px gold;">${name}</h3>
+        <div class="slot-container">
+          <div class="slot" id="s1-${i}">Cherry</div>
+          <div class="slot" id="s2-${i}">Cherry</div>
+          <div class="slot" id="s3-${i}">Cherry</div>
+        </div>
+        <button class="spin-btn" onclick="spin(${i})">SPIN (1 Coin)</button>
+      `;
+      document.getElementById('games').appendChild(div);
+    });
+
+    function spin(gameId) {
+      if (coins < 1) return alert("Buy coins at $ThepeoplesCasino");
+      coins--;
+      const s1 = rand(), s2 = rand(), s3 = rand();
+      document.getElementById(`s1-${gameId}`).innerText = s1;
+      document.getElementById(`s2-${gameId}`).innerText = s2;
+      document.getElementById(`s3-${gameId}`).innerText = s3;
+
+      setTimeout(() => {
+        if (s1 === s2 && s2 === s3) {
+          let win = s1 === 'Seven' ? 5 : s1 === 'Gold Bar' ? 6 : 3;
+          sweeps += win;
+          triggerWin(win);
+          alert(`JACKPOT! +${win} Sweeps!`);
+        } else if (Math.random() < 0.4) {
+          sweeps += 1;
+          triggerWin(1);
+          alert(`+1 Sweep!`);
+        }
+        update();
+      }, 300);
+    }
+
+    function rand() { return symbols[Math.floor(Math.random() * symbols.length)]; }
+
+    function triggerWin(amount) {
+      const effect = document.getElementById('winEffect');
+      for (let i = 0; i < amount * 10; i++) {
+        const coin = document.createElement('div');
+        coin.className = 'coin';
+        coin.style.left = Math.random() * 100 + 'vw';
+        coin.style.animationDelay = Math.random() * 0.5 + 's';
+        effect.appendChild(coin);
+        setTimeout(() => coin.remove(), 2000);
+      }
+    }
+
+    function buy(amount) {
+      window.open(`https://cash.app/$ThepeoplesCasino/${amount}`, '_blank');
+      setTimeout(() => {
+        coins += amount * 100;
+        update();
+        alert(`$${amount} sent! ${amount * 100} Coins added!`);
+      }, 5000);
+    }
+
+    function redeem() {
+      if (sweeps < 10) return alert("Need 10+ Sweeps");
+      const email = prompt("PayPal Email:");
+      if (email) {
+        const payout = (sweeps * 0.01).toFixed(2);
+        window.open(`https://paypal.me/ThepeoplesCasino/${payout}`, '_blank');
+        setTimeout(() => {
+          sweeps = 0;
+          update();
+          alert(`$${payout} sent to ${email}!`);
+        }, 3000);
+      }
+    }
+
+    function update() {
+      document.getElementById('coins').innerText = coins;
+      document.getElementById('sweeps').innerText = sweeps;
+    }
+    update();
+  </script>
+</body>
+</html>
